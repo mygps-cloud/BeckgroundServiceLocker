@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
+
 import { BackgroundService } from './BackgroundService.service';
 import { ScheduleModule } from '@nestjs/schedule';
 import { LockerService } from './update/update.service';
@@ -21,7 +21,7 @@ import { Locker } from './update/entity';
     }),
     TypeOrmModule.forFeature([Locker]),
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [BackgroundService, LockerService],
 })
 export class AppModule {}
