@@ -1,28 +1,28 @@
 import { Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn } from 'typeorm';
 
-@Entity('locker') 
+@Entity({ schema: 'dealership-module', name: 'Box' })
 export class Locker {
-  @PrimaryGeneratedColumn()
-  id: number;
+    @PrimaryGeneratedColumn()
+    Id: number;
 
-  @Column({ type: 'varchar', length: 255 })
-  name: string;
+    @Column({ type: 'varchar', length: 255 })
+    Name: string;
 
-  @Column({ type: 'boolean' })
-  emergencyOpen: boolean;
+    @Column({ type: 'bit', default: 0 })
+    EmergencyOpen: boolean;
 
-  @Column({ type: 'varchar', length: 255 })
-  conditionLocker: string;
+    @Column({ type: 'varchar', length: 255 })
+    Condition: string;
 
-  @Column({ type: 'boolean' })
-  connectionStatus: boolean;
+    @Column({ type: 'bit', default: 0 })
+    ConnectionStatus: boolean;
 
-  @CreateDateColumn({ type: 'timestamp' })
-  createdDate: Date;
+    @CreateDateColumn({ type: 'datetime' })
+    CreatedDate: Date;
 
-  @UpdateDateColumn({ type: 'timestamp' })
-  updatedDate: Date;
-
-  @Column({ type: 'int' })
-  lockerId: number;
+    @UpdateDateColumn({ type: 'datetime', nullable: true })
+    LastConnectionTime?: Date;
+    
+    @Column({ type: 'int' })
+    LockerId: number;
 }

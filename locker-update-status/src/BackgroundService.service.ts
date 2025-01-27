@@ -9,9 +9,9 @@ export class BackgroundService {
   private readonly logger = new Logger(BackgroundService.name);
 
 
-  @Interval(120000)
+  @Interval(5000)
  async handleInterval() {
-    await   this.updateService.updateLockerStatus();
+     await   this.updateService.updateLockerStatus();
    
   }
 
