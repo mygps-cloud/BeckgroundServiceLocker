@@ -2,14 +2,14 @@
 
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MoreThan, Repository } from 'typeorm';
+import { LessThan, MoreThan, Repository } from 'typeorm';
 import { Locker } from './entity';
+import { time } from 'console';
 
 
 
 @Injectable()
 export class LockerService {
-
 
   constructor(
     @InjectRepository(Locker)
@@ -26,18 +26,24 @@ export class LockerService {
       
       await queryRunner.query('SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED');
 
-      const twoMinutesAgo = new Date(Date.now() - 2 * 60 * 1000);
- 
-      const lockers = await this.lockerRepository.find({
-        where: { ConnectionStatus: true },
-      });
+   
+      const twoMinutesAgo = new Date(Date.now() - 2 * 60 * 1000); 
+      const fourHoursLater = new Date(twoMinutesAgo.getTime() - 4 * 60 * 60 * 1000); 
+      
 
+      // console.log('Two Minutes Ago + 4 Hours:', fourHoursLater.toISOString());
+      
+ 
       // const lockers = await this.lockerRepository.find({
-      //   where: {
-      //     ConnectionStatus: true,
-      //     LastConnectionTime: MoreThan(twoMinutesAgo), 
-      //   },
+      //   where: { ConnectionStatus: true },
       // });
+
+      const lockers = await this.lockerRepository.find({
+        where: {
+          ConnectionStatus: true,
+          LastConnectionTime: MoreThan(fourHoursLater), 
+        },
+      });
       console.log(lockers)
      
       if (lockers.length > 0) {
