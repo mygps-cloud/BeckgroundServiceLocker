@@ -27,10 +27,13 @@ export class LockerService {
       await queryRunner.query('SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED');
 
    
-      const twoMinutesAgo = new Date(Date.now() - 2 * 60 * 1000); 
-      const fourHoursLater = new Date(twoMinutesAgo.getTime() - 4 * 60 * 60 * 1000); 
+      // const twoMinutesAgo = new Date(Date.now() - 2 * 60 * 1000); 
+      // const fourHoursLater = new Date(twoMinutesAgo.getTime() - 4 * 60 * 60 * 1000); 
       
+  
+      const twoMinutesAgo = new Date(Date.now() - 2 * 60 * 1000); 
 
+      
       // console.log('Two Minutes Ago + 4 Hours:', fourHoursLater.toISOString());
       
  
@@ -41,7 +44,7 @@ export class LockerService {
       const lockers = await this.lockerRepository.find({
         where: {
           ConnectionStatus: true,
-          LastConnectionTime: MoreThan(fourHoursLater), 
+          LastConnectionTime: MoreThan(twoMinutesAgo), 
         },
       });
       console.log(lockers)
